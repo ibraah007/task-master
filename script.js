@@ -1,5 +1,6 @@
 // Load tasks from localStorage or start empty
 let tasks = [];
+let filter = "all"; // NEW
 
 // Load saved tasks when page opens
 function loadTasks() {
@@ -16,7 +17,13 @@ function saveTasks() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// NEW: Update remaining tasks counter
+// FILTER FUNCTION (NEW)
+function setFilter(type) {
+    filter = type;
+    renderTasks();
+}
+
+// Update remaining tasks counter
 function updateRemainingCount() {
     const remaining = tasks.filter(task => !task.completed).length;
     const remainingSpan = document.getElementById('remainingCount');
@@ -26,7 +33,7 @@ function updateRemainingCount() {
     updateProgressBar();
 }
 
-// NEW: Update progress bar
+// Update progress bar
 function updateProgressBar() {
     const total = tasks.length;
     const completed = tasks.filter(task => task.completed).length;
@@ -95,23 +102,33 @@ function editTask(id) {
     }
 }
 
-// Render all tasks to the screen (READ)
+// Render all tasks to the screen (READ + FILTER)
 function renderTasks() {
     const taskList = document.getElementById('taskList');
     const taskCountSpan = document.getElementById('taskCount');
-    
-    if (tasks.length === 0) {
+
+    let filteredTasks = tasks;
+
+    if (filter === "active") {
+        filteredTasks = tasks.filter(task => !task.completed);
+    } else if (filter === "completed") {
+        filteredTasks = tasks.filter(task => task.completed);
+    }
+
+    if (filteredTasks.length === 0) {
         taskList.innerHTML = '<li class="empty-message">No tasks yet. Add one above! ✨</li>';
         taskCountSpan.textContent = '0';
         return;
     }
-    
-    taskCountSpan.textContent = tasks.length;
-    
+
+    taskCountSpan.textContent = filteredTasks.length;
+
     let html = '';
-    for (let i = 0; i < tasks.length; i++) {
-        const task = tasks[i];
+
+    for (let i = 0; i < filteredTasks.length; i++) {
+        const task = filteredTasks[i];
         const completedClass = task.completed ? 'completed' : '';
+
         html += `
             <li class="task-item">
                 <span class="task-text ${completedClass}">${escapeHtml(task.text)}</span>
@@ -125,7 +142,7 @@ function renderTasks() {
             </li>
         `;
     }
-    
+
     taskList.innerHTML = html;
 }
 
