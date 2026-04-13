@@ -5,8 +5,12 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Inter', sans-serif;
+
+    /* 🌄 Background image */
+    background: url("https://images.unsplash.com/photo-1506784365847-bbad939e9335") no-repeat center center fixed;
+    background-size: cover;
+
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -14,102 +18,77 @@ body {
     padding: 20px;
 }
 
-.container {
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
-    max-width: 600px;
+/* 🌫️ Overlay for readability */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: -1;
 }
 
+/* MAIN CONTAINER */
+.container {
+    width: 95%;
+    max-width: 600px;
+
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+
+    border-radius: 20px;
+    padding: 20px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+}
+
+/* HEADER */
 h1 {
     text-align: center;
-    color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .subtitle {
     text-align: center;
-    color: #666;
-    margin-bottom: 30px;
-    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 20px;
 }
 
+/* INPUT SECTION (mobile-first) */
 .input-section {
     display: flex;
+    flex-direction: column;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 #taskInput {
-    flex: 1;
-    padding: 15px;
-    border: 2px solid #ddd;
+    padding: 14px;
     border-radius: 10px;
-    font-size: 16px;
+    border: none;
     outline: none;
+    font-size: 16px;
 }
 
 #addBtn {
-    background: #667eea;
-    color: white;
+    padding: 14px;
     border: none;
-    padding: 15px 25px;
     border-radius: 10px;
-    cursor: pointer;
-}
-
-.remaining-counter {
-    text-align: center;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.progress-bar-container {
-    background: #eee;
-    height: 10px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-.progress-bar {
     background: #48bb78;
-    height: 100%;
-    width: 0%;
-}
-
-.task-list {
-    list-style: none;
-}
-
-.task-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: #f7f7f7;
-    margin-bottom: 10px;
-    border-radius: 10px;
-}
-
-.task-text.completed {
-    text-decoration: line-through;
-    color: gray;
-}
-
-.task-buttons button {
-    margin-left: 5px;
-    padding: 5px 8px;
-    border: none;
-    border-radius: 5px;
+    color: white;
+    font-weight: bold;
     cursor: pointer;
 }
 
-/* FILTER BUTTONS (NEW) */
+/* FILTER BUTTONS */
 .filter-buttons {
     display: flex;
-    justify-content: center;
     gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
     margin-bottom: 15px;
 }
 
@@ -118,16 +97,111 @@ h1 {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    background: #eee;
-}
-
-.filter-buttons button:hover {
-    background: #667eea;
+    background: rgba(255,255,255,0.3);
     color: white;
 }
 
+.filter-buttons button.active {
+    background: white;
+    color: black;
+}
+
+/* COUNTER */
+.remaining-counter {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* PROGRESS BAR */
+.progress-bar-container {
+    background: rgba(255,255,255,0.3);
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #48bb78, #38a169);
+    transition: width 0.3s ease;
+}
+
+/* TASKS */
+.task-list {
+    list-style: none;
+}
+
+.task-item {
+    background: rgba(255,255,255,0.2);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    animation: fadeIn 0.3s ease;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.task-text.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.task-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.task-buttons button {
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* STATS */
+.stats {
+    text-align: center;
+    margin-top: 15px;
+    opacity: 0.8;
+}
+
+/* EMPTY */
 .empty-message {
     text-align: center;
-    color: gray;
+    opacity: 0.7;
     padding: 20px;
+}
+
+/* 📱 MOBILE BREAKPOINT */
+@media (max-width: 600px) {
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .subtitle {
+        font-size: 12px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .task-item {
+        font-size: 14px;
+    }
 }
