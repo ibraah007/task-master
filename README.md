@@ -7,7 +7,7 @@ It helps users manage daily tasks efficiently with full CRUD functionality, filt
 
 👉 Add your link here:
 
-https://your-username.github.io/task-master/
+https://Ashomondi.github.io/task-master/
 ✨ Features
 ✅ Core Features (CRUD)
 ➕ Create tasks
