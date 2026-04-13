@@ -16,12 +16,19 @@
             <button id="addBtn" onclick="addTask()">+ Add Task</button>
         </div>
 
-        <!-- NEW: Remaining tasks counter -->
+        <!-- FILTER BUTTONS (NEW) -->
+        <div class="filter-buttons">
+            <button onclick="setFilter('all')">All</button>
+            <button onclick="setFilter('active')">Pending</button>
+            <button onclick="setFilter('completed')">Completed</button>
+        </div>
+
+        <!-- Remaining tasks counter -->
         <div class="remaining-counter">
             <span id="remainingCount">0</span> tasks remaining
         </div>
 
-        <!-- NEW: Progress bar (Bonus feature) -->
+        <!-- Progress bar -->
         <div class="progress-bar-container">
             <div class="progress-bar" id="progressBar"></div>
         </div>
